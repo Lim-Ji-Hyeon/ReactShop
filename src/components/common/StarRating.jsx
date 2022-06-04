@@ -23,7 +23,7 @@ export default function StarRating(props) {
     starArray.push({name : "grey", image : faStar, id : ((i + 1)*100 + (i + 1))})
   }
 
-  const stars = starArray.map((star) => <StyledSpan key={star.id}><StyledStar key={star.id} color={star.name} icon={star.image}></StyledStar></StyledSpan>)
+  const stars = starArray.map((star) => <StyledSpan key={star.id}><StyledStar color={star.name} icon={star.image}></StyledStar></StyledSpan>)
 
   return (
     <StyledDiv className="starRating">
