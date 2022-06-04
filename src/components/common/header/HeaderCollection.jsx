@@ -8,16 +8,14 @@ import Cart from '../../views/Cart'
 
 export default function HeaderCollection() {
   return (
-    <>
-    <BrowserRouter>
-      <Routes>
-        <Route path={"/"} element={<Header/>}/>
-        <Route path={"/fashion"} element={<Fashion/>}/>
-        <Route path={"/accessory"} element={<Accessory/>}/>
-        <Route path={"/digital"} element={<Digital/>}/>
-        <Route path={"/myCart"} element={<Cart/>}/>
-      </Routes>
-    </BrowserRouter>
-    </>
+  <BrowserRouter>
+    <Routes>
+      <Route path={"/"} element={<Header/>}/>
+      <Route path={"/fashion"} element={<Fashion/>}/>
+      <Route path={"/accessory"} element={<Accessory/>}/>
+      <Route path={"/digital"} element={<Digital/>}/>
+      <Route path={"/myCart"} element={<Cart/>}/>
+    </Routes>
+  </BrowserRouter>
   )
 }

@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {card, sns} from '../data/footerData'
 
 export default function Footer() {
-  const cards = card.map((item, index) => (<StyledLi><StyledImg key={index} icon={item.image} title={item.name}/></StyledLi>))
-  const snsBrand = sns.map((item, index) => (<StyledSns href={item.url} target="_blank"><StyledImg key ={index} icon={item.image} title={item.name}/></StyledSns>))
+  const cards = card.map((item) => (<StyledLi key={item.id}><StyledImg key={item.id} icon={item.image} title={item.name}/></StyledLi>))
+  const snsBrand = sns.map((item) => (<StyledSns key={item.id} href={item.url} target="_blank"><StyledImg key ={item.id} icon={item.image} title={item.name}/></StyledSns>))
   return (
     <StyledFooter>
       <StyledDiv>
@@ -40,15 +40,15 @@ const StyledFooter = styled.footer`
   row-gap : 2.5rem;
 `
 const StyledDiv = styled.div`
-  width : 5rem;
-  height : 2rem;
+  width : 8rem;
+  height : 3rem;
   display : inline-block;
   text-align : center;
 `
 const StyledA = styled.a`
   text-decoration : none;
   color : #696969;
-  font-size : 1rem;
+  font-size : 1.5rem;
   font-weight : 600;
 `
 
@@ -68,15 +68,15 @@ const StyledBrand = styled.div`
 
 const StyledP = styled.p`
   margin : 0;
-  font-size : 1rem;
+  font-size : 1.5rem;
   font-weight : 600;  
   color : #696969;
 `
 
 const StyledLi = styled.li`
   list-style : none;
-  width : 5rem;
-  height : 2.5rem;
+  width : 6rem;
+  height : 3rem;
 `
 
 const StyledImg = styled(FontAwesomeIcon)`
@@ -85,7 +85,7 @@ const StyledImg = styled(FontAwesomeIcon)`
   color : white;
 `
 const StyledSns = styled.a`
-  width : 5rem;
-  height : 2.5rem;
+  width : 6rem;
+  height : 3rem;
   margin-right : 0.5rem;
 `
