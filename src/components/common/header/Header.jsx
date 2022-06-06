@@ -5,8 +5,7 @@ import { faBars, faMagnifyingGlass, faCartShopping } from "@fortawesome/free-sol
 import {faSun, faMoon} from "@fortawesome/free-regular-svg-icons"
 import styled from "styled-components";
 import { categoryData } from "../../../data/categoryData";
-import { SmallAllButton } from "../Button";
-
+import Button from "../Button";
 
 export default function Header() {
   const [mode, setMode] = useState("black"); 
@@ -20,7 +19,7 @@ export default function Header() {
   return (
   <StyledHeader mode={mode}>
     <Hidden>
-      <SmallAllButton><FontAwesomeIcon icon={faBars} className="menuImg" alt="menu"/></SmallAllButton>
+      <Button type={"xSmall"}><FontAwesomeIcon icon={faBars} className="menuImg" alt="menu"/></Button>
     </Hidden>
     <Logo><LogoLink mode={mode} to="/">React Shop</LogoLink></Logo>
     <Category>
@@ -111,11 +110,15 @@ const HeaderItem = styled.div`
   margin-right : 0.5rem;
 ` 
 
-const StyledButton = styled(SmallAllButton)`
+const StyledButton = styled.button`
   display : inline-block;
-  background-color : ${props => props.mode};
+  width : 4rem;
+  height : 4rem;
+  background-color : ${({mode}) => mode === "black" ? "black": "white"};
+  border-radius : 0.5rem;
   cursor: pointer;
   float : left;
+  border : 0;
   margin: 0.5rem 1rem 0 0;
   transition : 0.3s;
   &:hover {

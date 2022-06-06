@@ -1,59 +1,45 @@
-const button = {
-  font : {
-    textSize : "1.3rem",
-    textColor : "white",
+const color = {
+  red : "red",
+  purple : "blueviolet",
+  green : "green",
+  white : "white",
+  black : "black",
+}
+
+const borderRadius = {
+  all : "0.6rem",
+  left : "0.6rem 0 0 0.6rem",
+  right : "0 0.6rem 0.6rem 0",
+}
+
+const font = {
+  size : {
+    normal : "1.3rem",
   },
-  backgroundColor : {
-    purple : "blueviolet",
-  },
-  hoverColor : {
-    purple : "#6f00cc",
-  },
-  borderRadius : {
-    all : "0.6rem",
-    onlyLeft : "0.6rem 0 0 0.6rem",
-    onlyRight : "0 0.6rem 0.6rem 0",
-  },
-  width : {
-    small : "4rem",
-    medium : "8rem",
-    large : "12rem",
-  },
-  height : {
-    normal : "4rem",
+  weight : {
+    normal : "700",
   },
 }
 
-const badge = {
-  new : {
-    width  : "4.5rem",
-    height : "2rem",
-    backgroundColor : "green",
-    fontColor : "white",
-    fontSize : "1.3rem",
-    borderRadius : "0.8rem",
-  },
-  best : {
-    width  : "5rem",
-    height : "2rem",
-    backgroundColor : "red",
-    fontColor : "white",
-    fontSize : "1.3rem",
-    borderRadius : "0.8rem",
-  },
+const width = {
+  xSmall : "4rem",
+  small : "5rem",
+  medium : "8rem",
+  large : "12rem",
 }
 
-const breadCrumbs = {
-  width : "10rem",
-  height : "3rem",
-  fontSize : "1.5rem",
-  fontColor : "black",
+const height = {
+  small : "2rem",
+  medium : "4rem",
 }
 
 const theme = {
-  button,
-  badge,
-  breadCrumbs,
+  color,
+  borderRadius,
+  font,
+  width,
+  height,
 }
 
 export default theme;
+

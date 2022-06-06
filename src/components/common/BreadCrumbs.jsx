@@ -4,29 +4,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function BreadCrumbs(props) {
-  let from = props.from
-  let to = props.to
-
   return ( 
     <StyledDiv>
-      {from}
+      {props.from}
       <StyledIcon icon={faAngleRight}></StyledIcon>
-      {to}
+      {props.to}
     </StyledDiv>
   )
 }
 
 const StyledDiv = styled.div`
-  width : ${({theme}) => theme.breadCrumbs.width};
-  height : ${({theme}) => theme.breadCrumbs.height};
-  font-size : ${({theme}) => theme.breadCrumbs.fontSize};
-  color : ${({theme}) => theme.breadCrumbs.fontColor};
+  width : 10rem;
+  height : ${({theme}) => theme.height.medium};
+  font-size : ${({theme}) => theme.font.size.normal};
+  color : ${({theme}) => theme.color.black};
+  font-weight : ${({theme}) => theme.font.weight.normal};
   display : inline-block;
   margin-left : 1rem;
 `
 
 const StyledIcon = styled(FontAwesomeIcon)`
-  width : ${({theme}) => theme.breadCrumbs.fontSize};
-  height : ${({theme}) => theme.breadCrumbs.fontSize};
+  width : ${({theme}) => theme.font.size.normal};
+  height : ${({theme}) => theme.font.size.normal};
   margin : 0 0.5rem 0 0.5rem;
 `
