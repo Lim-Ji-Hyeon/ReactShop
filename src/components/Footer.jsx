@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {card, sns} from '../data/footerData'
 
 export default function Footer() {
-  const cards = card.map((item) => (<StyledLi key={item.id}><StyledImg key={item.id} icon={item.image} title={item.name}/></StyledLi>))
-  const snsBrand = sns.map((item) => (<StyledSns key={item.id} href={item.url} target="_blank"><StyledImg key ={item.id} icon={item.image} title={item.name}/></StyledSns>))
+  const cards = card.map((item) => (<StyledLi key={item.id}><StyledImg icon={item.image} title={item.name}/></StyledLi>))
+  const snsBrand = sns.map((item) => (<StyledSns key={item.id} href={item.url} target="_blank"><StyledImg icon={item.image} title={item.name}/></StyledSns>))
   return (
     <StyledFooter>
       <StyledDiv>
