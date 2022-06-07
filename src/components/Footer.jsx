@@ -4,29 +4,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {card, sns} from '../data/footerData'
 
 export default function Footer() {
-  const cards = card.map((item) => (<StyledLi key={item.id}><StyledImg icon={item.image} title={item.name}/></StyledLi>))
-  const snsBrand = sns.map((item) => (<StyledSns key={item.id} href={item.url} target="_blank"><StyledImg icon={item.image} title={item.name}/></StyledSns>))
+  const cards = card.map((item) => (<CardsList key={item.id}><Image icon={item.image} title={item.name}/></CardsList>))
+  const snsBrand = sns.map((item) => (<SnsBrand key={item.id} href={item.url} target="_blank"><Image icon={item.image} title={item.name}/></SnsBrand>))
   return (
-    <StyledFooter>
-      <StyledDiv>
-        <StyledA href="https://www.zero-base.co.kr/" target="_blank" rel ="noopener noreferer">제로베이스</StyledA>
-      </StyledDiv>
-      <StyledUl>
+    <FooterWrapper>
+      <Logo>
+        <LogoLink href="https://www.zero-base.co.kr/" target="_blank" rel ="noopener noreferer">제로베이스</LogoLink>
+      </Logo>
+      <Cards>
         {cards}
-      </StyledUl>
+      </Cards>
       <div>
-        <StyledBrand>
+        <Brand>
           {snsBrand}
-        </StyledBrand>
+        </Brand>
       </div>
       <div>
-        <StyledP>Copyright 2022 Zero Base</StyledP>
+        <CopyRight>Copyright 2022 Zero Base</CopyRight>
       </div>
-    </StyledFooter>
+    </FooterWrapper>
   )
 }
 
-const StyledFooter = styled.footer`
+const FooterWrapper = styled.footer`
   width : 100%;
   height : 20rem;
   background-color : black;
@@ -39,20 +39,20 @@ const StyledFooter = styled.footer`
   grid-auto-flow : row;
   row-gap : 2.5rem;
 `
-const StyledDiv = styled.div`
+const Logo = styled.div`
   width : 8rem;
   height : 3rem;
   display : inline-block;
   text-align : center;
 `
-const StyledA = styled.a`
+const LogoLink = styled.a`
   text-decoration : none;
   color : #696969;
   font-size : 1.5rem;
   font-weight : 600;
 `
 
-const StyledUl = styled.ul`
+const Cards = styled.ul`
   display : flex;
   list-style : none;
   gap : 0.5rem;
@@ -60,31 +60,31 @@ const StyledUl = styled.ul`
   padding : 0;
 `
 
-const StyledBrand = styled.div`
+const Brand = styled.div`
   gap : 1rem;
   grid-auto-flow : column;
   display : grid;
 `
 
-const StyledP = styled.p`
+const CopyRight = styled.p`
   margin : 0;
   font-size : 1.5rem;
   font-weight : 600;  
   color : #696969;
 `
 
-const StyledLi = styled.li`
+const CardsList = styled.li`
   list-style : none;
   width : 6rem;
   height : 3rem;
 `
 
-const StyledImg = styled(FontAwesomeIcon)`
+const Image = styled(FontAwesomeIcon)`
   width : 100%;
   height : 100%;
   color : white;
 `
-const StyledSns = styled.a`
+const SnsBrand = styled.a`
   width : 6rem;
   height : 3rem;
   margin-right : 0.5rem;
