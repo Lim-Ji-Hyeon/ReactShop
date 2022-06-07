@@ -18,7 +18,7 @@ export default function Header() {
   const category = categoryData.map((item, index) => (<CategoryLink mode={mode} key={index} to={item.url}>{item.category}</CategoryLink>))
   
   return (
-  <StyledHeader mode={mode}>
+  <HeaderWrapper mode={mode}>
     <Hidden>
       <Button color={mode} type={"xSmall"}><FontAwesomeIcon icon={faBars} alt="menu"/></Button>
     </Hidden>
@@ -47,11 +47,11 @@ export default function Header() {
         </span>
       </Cart>
     </HeaderItem>
-  </StyledHeader>
+  </HeaderWrapper>
   )
 }
 
-const StyledHeader = styled.header`
+const HeaderWrapper = styled.header`
   width : 100%;
   height : 5rem;
   background-color : ${props => props.mode};
