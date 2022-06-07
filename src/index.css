@@ -5,6 +5,11 @@ body {
 
 body {
   margin: 0;
+  padding-top : 5rem;
   box-sizing: border-box;
   outline: none;
+  height : 100rem;
+  overflow-y: auto;
+  position : relative;
 }
+
