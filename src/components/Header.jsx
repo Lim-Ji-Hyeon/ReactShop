@@ -4,13 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faMagnifyingGlass, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import {faSun, faMoon} from "@fortawesome/free-regular-svg-icons"
 import styled from "styled-components";
-import { categoryData } from "../../../data/categoryData";
-import { SmallAllButton } from "../Button";
-
+import { categoryData } from "../data/categoryData";
+import Button from "../components/Button";
 
 export default function Header() {
   const [mode, setMode] = useState("black"); 
-  
+  const [cartData, setCartData] = useState(0);
+
   const onClickMode = () => {
     mode === "black" ? setMode("white") : setMode("black")
   }
@@ -18,24 +18,24 @@ export default function Header() {
   const category = categoryData.map((item, index) => (<CategoryLink mode={mode} key={index} to={item.url}>{item.category}</CategoryLink>))
   
   return (
-  <StyledHeader mode={mode}>
+  <HeaderWrapper mode={mode}>
     <Hidden>
-      <SmallAllButton><FontAwesomeIcon icon={faBars} className="menuImg" alt="menu"/></SmallAllButton>
+      <Button color={mode} type={"xSmall"}><FontAwesomeIcon icon={faBars} alt="menu"/></Button>
     </Hidden>
     <Logo><LogoLink mode={mode} to="/">React Shop</LogoLink></Logo>
     <Category>
       {category}
     </Category>
     <HeaderItem> 
-      <StyledButton mode={mode} onClick={onClickMode}>
+      <ModeButton type={"xSmall"} color={mode} hoverColor={"grey"} onClick={onClickMode}>
         { mode === "black" ?
           <LightMode icon={faSun} alt="라이트 모드 선택"/> :
           <DarkMode icon={faMoon} alt="다크 모드 선택"/>
         }
-      </StyledButton>
+      </ModeButton>
       <Search>
         <Hidden>
-          <StyledButton><HiddenSearch icon={faMagnifyingGlass} alt="검색"/></StyledButton>
+          <Button color={mode} type={"xSmall"}><FontAwesomeIcon icon={faMagnifyingGlass} alt="검색"/></Button>
         </Hidden>
         <SearchInput mode={mode} type="text" placeholder="검색"></SearchInput>
         <List></List>
@@ -43,21 +43,22 @@ export default function Header() {
       <Cart to="/myCart">
         <span>
           <CartImg mode={mode} icon={faCartShopping} alt="장바구니"/>
-          <CartNumber>0</CartNumber>
+          <CartNumber>{cartData}</CartNumber>
         </span>
       </Cart>
     </HeaderItem>
-  </StyledHeader>
+  </HeaderWrapper>
   )
 }
 
-const StyledHeader = styled.header`
+const HeaderWrapper = styled.header`
   width : 100%;
   height : 5rem;
   background-color : ${props => props.mode};
   display : flex;
   align-items : center;
   position : fixed;
+  top : 0;
   z-index : 10;
 `;
 
@@ -109,14 +110,15 @@ const HeaderItem = styled.div`
   height: 5rem;
   display : inline-block;
   margin-right : 0.5rem;
+  display : flex;
+  flex-direction : row;
+  padding-top : 1rem;
 ` 
 
-const StyledButton = styled(SmallAllButton)`
+const ModeButton = styled(Button)`
   display : inline-block;
-  background-color : ${props => props.mode};
-  cursor: pointer;
-  float : left;
-  margin: 0.5rem 1rem 0 0;
+  background-color : ${({color}) => color === "black" ? "black": "white"};
+  margin: 1rem 1rem 0 0;
   transition : 0.3s;
   &:hover {
     background-color : #696969; 
@@ -138,12 +140,9 @@ const Search = styled.div`
   width : 13rem;
   height: 5rem;
   display : inline-block;
-  float : left;
   margin-right : 0.5rem;
 `
-const HiddenSearch = styled(FontAwesomeIcon)`
-  display : none;
-`
+
 const SearchInput = styled.input`
   width : 12rem;
   height: 2.5rem;
@@ -152,7 +151,7 @@ const SearchInput = styled.input`
   border : 0;
   color : ${props => props.mode === "black" ? "white" : "black"};
   padding-left : 0.6rem;
-  margin : 1.25rem 0 1.5rem;
+  margin : 0.6rem 0 0 0.5rem;
   ::placeholder {
     color : ${props => props.mode === "black" ? "white" : "black"};
   }
@@ -167,7 +166,7 @@ const Cart = styled(Link)`
   cursor: pointer;
   position : relative;
   border-radius : 0.5rem;
-  margin : 0.75rem 0 0 0;
+  margin : 0rem 0 0 0.5rem;
   &:hover {
     background-color : #696969;
   }
@@ -177,7 +176,7 @@ const CartImg = styled(FontAwesomeIcon)`
   width : 2.5rem;
   height : 2.5rem;
   color : ${props => props.mode === "black" ? "white" : "black"};
-  margin : 0.5rem;
+  margin : 0.8rem 0.5rem 0.5rem 0.5rem;
 `
 const CartNumber = styled.span`
   width: 2rem;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import CardItem from './CardItem';
-import productInfo from '../../../data.js'
+import productInfo from '../../data.js'
 
 export default function CardList() {
   const validateData = (datas) => {
