@@ -22,26 +22,26 @@ export default function StarRating(props) {
     starArray.push({name : "grey", image : faStar, id : ((i + 1)*100 + (i + 1))})
   }
 
-  const stars = starArray.map((star) => <StyledSpan key={star.id}><StyledStar color={star.name} icon={star.image}></StyledStar></StyledSpan>)
+  const stars = starArray.map((star) => <StarSpan key={star.id}><StarIcon color={star.name} icon={star.image}></StarIcon></StarSpan>)
 
   return (
-    <StyledDiv className="starRating">
+    <StarRatingWrapper>
       {stars}
-    </StyledDiv>
+    </StarRatingWrapper>
   )
 }
 
-const StyledDiv = styled.div`
+const StarRatingWrapper = styled.div`
   width : 15rem;
   height : 3rem;
   display : inline-block;
 `
 
-const StyledSpan = styled.span`
+const StarSpan = styled.span`
   width : 3rem;
   height : 3rem;
 `
-const StyledStar = styled(FontAwesomeIcon)`
+const StarIcon = styled(FontAwesomeIcon)`
   width : 3rem;
   height : 3rem;
   color : ${props => props.color};
