@@ -4,6 +4,7 @@ const color = {
   green : "green",
   white : "white",
   black : "black",
+  grey : "#696969",
 }
 
 const borderRadius = {
