@@ -1,33 +1,62 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react'
+import styled from 'styled-components'
 
-export default function CardItem(props) {
+export default function CardItem({
+  src,
+  alt,
+  title,
+  price,
+}) {
   return (
-  <CardBox>
-    <img src={props.src}/>
-    <h4>{props.title}</h4>
-    <p>{props.price}</p>
-  </CardBox>
+    <Container>
+      <ImageWrapper>
+        <ProductImage src={src} alt={alt} />
+      </ImageWrapper>
+      <ProductDescription>
+        <ProductName>{title}</ProductName>
+        <ProductPrice>${price}</ProductPrice>
+      </ProductDescription>
+    </Container>
   )
 }
 
-let CardBox = styled.div`
+const Container = styled.article`
+  margin: 1rem 1rem;
+  display: flex;
+  width: 30rem;
+  height: 30rem;
+  flex-direction: column;
+  align-items: center;
   border: 1px solid #eee;
-  border-radius: 0.5rem;
-  padding: 1rem 0 1rem 0;
+  border-radius: 1.5rem;
+`
+const ImageWrapper = styled.figure`
+  display: flex;
+  height: 70%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`
 
-  h4, p, img {
-    width: 90%;
-    display: block;
-    margin: 0 auto;
-    padding-bottom: 1rem;
+const ProductImage = styled.img`
+  height: 50%;
+  width: 50%;
+  &:hover {
+    height: 70%;
+    width: 70%;
   }
-
-  h4 {
-    font-size: 0.9rem;
-  }
-
-  p {
-    font-size: 0.8rem;
-  }
-`;
+`
+const ProductDescription = styled.figure`
+  display: flex;
+  flex-direction: column;
+  height: 30%;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+`
+const ProductName = styled.h3`
+  padding: 0 2rem;
+`
+const ProductPrice = styled.p`
+  padding: 0 2rem;
+`
