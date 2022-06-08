@@ -1,13 +1,17 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = 'https://fakestoreapi.com'
-
 export const GET = async (url, params) => {
   const data = await axios({
-    method: 'get',
     url,
+    method: 'get',
+    baseURL: 'https://fakestoreapi.com',
     params,
-  }).then((response) => response.data)
+  })
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log('Error', error.message)
+      console.log(error.config)
+    })
 
   return data
 }
