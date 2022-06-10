@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Link} from 'react-router-dom'
+import { useSelector,} from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faMagnifyingGlass, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import {faSun, faMoon} from "@fortawesome/free-regular-svg-icons"
@@ -9,7 +10,9 @@ import Button from "../components/Button";
 
 export default function Header() {
   const [mode, setMode] = useState("black"); 
-  const [cartData, setCartData] = useState(0);
+
+  let cartReducer = useSelector((state) => {return  state.cartReducer})
+  let cart = cartReducer[0].cartNumber
 
   const onClickMode = () => {
     mode === "black" ? setMode("white") : setMode("black")
@@ -43,7 +46,7 @@ export default function Header() {
       <Cart to="/myCart">
         <span>
           <CartImg mode={mode} icon={faCartShopping} alt="장바구니"/>
-          <CartNumber>{cartData}</CartNumber>
+          <CartNumber>{cart}</CartNumber>
         </span>
       </Cart>
     </HeaderItem>
