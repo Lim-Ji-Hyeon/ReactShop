@@ -9,23 +9,32 @@ import Digital from "../src/views/Digital"
 import Cart from "../src/views/Cart"
 import Footer from "../src/components/Footer"
 import MainPage from "./views/MainPage";
-
+import ProductPage from "./views/ProductPage";
+import {Provider} from 'react-redux'
+import {PersistGate} from 'redux-persist/integration/react'
+import {persistStore} from 'redux-persist'
+import {store} from "../src/store/index"
 
 function App() {
+  let persistor = persistStore(store)
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Header/>
-        <Routes>
-          <Route path={"/"} element={<MainPage/>}/>
-          <Route path={"/fashion"} element={<Fashion/>}/>
-          <Route path={"/accessory"} element={<Accessory/>}/>
-          <Route path={"/digital"} element={<Digital/>}/>
-          <Route path={"/myCart"} element={<Cart/>}/>
-        </Routes>
-      </BrowserRouter>
-      <Footer/>
-    </ThemeProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <Header/>
+            <Routes>
+              <Route path={"/"} element={<MainPage/>}/>
+              <Route path={"/fashion"} element={<Fashion/>}/>
+              <Route path={"/accessory"} element={<Accessory/>}/>
+              <Route path={"/digital"} element={<Digital/>}/>
+              <Route path={"/myCart"} element={<Cart/>}/>
+            </Routes>
+          </BrowserRouter>
+          <Footer/>
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
     )
 }
 
