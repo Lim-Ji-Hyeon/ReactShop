@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export default function Button({type, color="purple" ,borderRadius="all", hoverColor="green" ,children, onClick}) {
+export default function Button({size, color="purple" ,borderRadius="all", hoverColor="green" ,children, onClick}) {
   return (
-    <StyledButton onClick={onClick} type={type} color={color} hoverColor={hoverColor} borderRadius={borderRadius}>{children}</StyledButton>
+    <StyledButton onClick={onClick} size={size} color={color} hoverColor={hoverColor} borderRadius={borderRadius}>{children}</StyledButton>
   )
 }
 
 const StyledButton = styled.button`
-  width : ${({theme, type}) => theme.width[type]};
+  width : ${({theme, size}) => theme.width[size]};
   height : ${({theme}) => theme.height.medium};
   background-color : ${({theme, color}) => theme.color[color]};
   color : ${({theme}) => theme.color.white};

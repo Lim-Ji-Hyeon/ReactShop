@@ -16,10 +16,11 @@ export default function BreadCrumbs({from, to}) {
 
 const BreadCrumbsWrapper = styled.span`
   height : ${({theme}) => theme.height.small};
-  font-size : ${({theme}) => theme.font.size.normal};
+  font-size : ${({theme}) => theme.font.size.large};
   color : ${({theme}) => theme.color.black};
   font-weight : ${({theme}) => theme.font.weight.normal};
   display : inline-block;
+  margin : 2rem;
 `
 
 const Arrow = styled(FontAwesomeIcon)`

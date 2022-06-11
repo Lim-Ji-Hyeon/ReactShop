@@ -16,6 +16,7 @@ const borderRadius = {
 const font = {
   size : {
     normal : "1.3rem",
+    large : "1.5rem",
   },
   weight : {
     normal : "700",
