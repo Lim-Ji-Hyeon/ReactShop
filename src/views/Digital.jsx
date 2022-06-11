@@ -7,7 +7,7 @@ export default function Digital() {
   const [digital, setDigital] = useState([])
 
   const getDigital = async () => {
-    const products = await Promise.all([GET('/products/category/electronics')]).then((res) => {return res[0]})
+    const products = await GET(`/products/category/electronics`).then(res => res)
     await setDigital(products)
     }
 
