@@ -7,7 +7,7 @@ export default function Accessory() {
   const [accessory, setAccessory] = useState([])
 
   const getAccessory = async () => {
-    const products = await Promise.all([GET('/products/category/jewelery')]).then((res) => {return res[0]})
+    const products = await GET(`/products/category/jewelery`).then(res => res)
     await setAccessory(products)
     }
 
