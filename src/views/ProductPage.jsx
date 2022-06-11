@@ -11,6 +11,7 @@ import { addCart, incrementCartNumber } from "../store";
 
 export default function ProductPage({id}) {
   const [product, setProduct] = useState({})
+  const [modal, setModal] = useState(false)
 
   let cartReducer = useSelector((state) => {return  state.cartReducer})
   let number = cartReducer[0].cartNumber
@@ -20,6 +21,16 @@ export default function ProductPage({id}) {
   const addProduct = () => {
     dispatch(addCart({id}))
     dispatch(incrementCartNumber({number}))
+    setModal(true)
+  }
+
+  const Modal = () => {
+    return (
+      <ModalWrapper>
+        <ModalContent>장바구니에 담겼습니다.</ModalContent>
+        <Button color={"green"} size={"small"} onClick={() => {setModal(!modal)}}>확인</Button>        
+      </ModalWrapper>
+    )
   }
 
   const getProduct = async() => {
@@ -28,8 +39,8 @@ export default function ProductPage({id}) {
       category : item.category,
       title : item.title,
       image : item.image,
-      rate : item.rating.rate,
-      counts : item.rating.counts,
+      rate : parseFloat(item.rating.rate).toFixed(1),
+      counts : item.rating.count,
       price : item.price,
       description : item.description,
     })
@@ -57,9 +68,10 @@ export default function ProductPage({id}) {
         </RateDiv>
         <Price>${product.price}</Price>
         <ButtonDiv>
-          <Button type={"large"} onClick={addProduct}>장바구니에 담기</Button>
+          <Button size={"large"} onClick={addProduct}>장바구니에 담기</Button>
+          {modal === true ? <Modal/> : null}
           <Link to={"/myCart"}>
-            <Button type={"large"}>장바구니로 이동</Button>
+            <Button size={"large"}>장바구니로 이동</Button>
           </Link>
         </ButtonDiv>
       </Contents>
@@ -148,4 +160,26 @@ const ButtonDiv = styled.div`
   height : 4rem;
   grid-auto-flow : column;
   column-gap : 0.5rem;
+`
+
+const ModalWrapper = styled.div`
+  width : 20rem;
+  height : 10rem;
+  background-color :  ${({theme}) => theme.color.white};
+  border : 1px solid #000000;
+  border-radius : 0.5rem;
+  z-index : 10;
+  position : absolute;
+  top : 15rem;
+  left : 45%;
+  display : grid;
+  place-items : center;
+  grid-auto-flow : row;
+  row-gap : 0.25rem;
+`
+
+const ModalContent = styled.p`
+  font-size : ${({theme}) => theme.font.size.large};
+  font-weight : ${({theme}) => theme.font.weight.normal};
+  margin-bottom : 0;
 `
