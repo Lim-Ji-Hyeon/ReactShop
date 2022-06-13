@@ -9,11 +9,10 @@ import Digital from "../src/views/Digital"
 import Cart from "../src/views/Cart"
 import Footer from "../src/components/Footer"
 import MainPage from "./views/MainPage";
-import ProductPage from "./views/ProductPage";
 import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
 import {persistStore} from 'redux-persist'
-import {store} from "../src/store/index"
+import store from './redux/store'
 
 function App() {
   let persistor = persistStore(store)

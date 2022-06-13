@@ -1,36 +1,43 @@
-import React, {useState} from "react";
+import React, { useState} from "react";
 import {Link} from 'react-router-dom'
-import { useSelector,} from 'react-redux'
+import { useSelector, useDispatch} from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faMagnifyingGlass, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import {faSun, faMoon} from "@fortawesome/free-regular-svg-icons"
 import styled from "styled-components";
 import { categoryData } from "../data/categoryData";
 import Button from "../components/Button";
+import {change} from '../redux/mode'
 
 export default function Header() {
-  const [mode, setMode] = useState("black"); 
+  
+  const cartStore = useSelector((state) => state.product.value)
+  const modeStore = useSelector((state) => state.mode.value)
 
-  let cartReducer = useSelector((state) => {return  state.cartReducer})
-  let cart = cartReducer[0].cartNumber
+  let mode = modeStore.color
+  const cart = cartStore.count
+
+  const dispatch = useDispatch()
 
   const onClickMode = () => {
-    mode === "black" ? setMode("white") : setMode("black")
+    mode = (mode === "black") ? "white" : "black"
+    dispatch(change({color : mode}))
   }
+
 
   const category = categoryData.map((item, index) => (<CategoryLink mode={mode} key={index} to={item.url}>{item.category}</CategoryLink>))
   
   return (
   <HeaderWrapper mode={mode}>
     <Hidden>
-      <Button color={mode} type={"xSmall"}><FontAwesomeIcon icon={faBars} alt="menu"/></Button>
+      <Button color={mode} size={"xSmall"}><FontAwesomeIcon icon={faBars} alt="menu"/></Button>
     </Hidden>
     <Logo><LogoLink mode={mode} to="/">React Shop</LogoLink></Logo>
     <Category>
       {category}
     </Category>
     <HeaderItem> 
-      <ModeButton type={"xSmall"} color={mode} hoverColor={"grey"} onClick={onClickMode}>
+      <ModeButton size={"xSmall"} color={mode} hoverColor={"grey"} onClick={onClickMode}>
         { mode === "black" ?
           <LightMode icon={faSun} alt="라이트 모드 선택"/> :
           <DarkMode icon={faMoon} alt="다크 모드 선택"/>
@@ -38,7 +45,7 @@ export default function Header() {
       </ModeButton>
       <Search>
         <Hidden>
-          <Button color={mode} type={"xSmall"}><FontAwesomeIcon icon={faMagnifyingGlass} alt="검색"/></Button>
+          <Button color={mode} size={"xSmall"}><FontAwesomeIcon icon={faMagnifyingGlass} alt="검색"/></Button>
         </Hidden>
         <SearchInput mode={mode} type="text" placeholder="검색"></SearchInput>
         <List></List>
