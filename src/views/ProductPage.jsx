@@ -7,20 +7,21 @@ import StarRate from "../components/StarRate";
 import Button from "../components/Button"
 import {Link} from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
-import { addCart, incrementCartNumber } from "../store";
+import {add} from '../redux/product'
 
 export default function ProductPage({id}) {
   const [product, setProduct] = useState({})
   const [modal, setModal] = useState(false)
 
-  let cartReducer = useSelector((state) => {return  state.cartReducer})
-  let number = cartReducer[0].cartNumber
+  const productStore = useSelector((state) => state.product.value) 
+  let productCount = 0
+  productCount = productStore.count
 
   const dispatch = useDispatch()
 
   const addProduct = () => {
-    dispatch(addCart({id}))
-    dispatch(incrementCartNumber({number}))
+    productCount += 1
+    dispatch(add({productId : id, count : productCount}))
     setModal(true)
   }
 
