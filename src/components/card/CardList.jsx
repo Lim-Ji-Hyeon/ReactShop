@@ -6,10 +6,11 @@ export default function CardList({ data }) {
   return (
     <Wrapper>
       {data?.map(
-        ({ id, image, category, title, price }) => {
+        ({ id, category, image, title, price }) => {
           return (
             <CardItem
-              key={`image_${id}`}
+              key={`${category}_${id}`}
+              id={id}
               src={image}
               alt={category}
               title={title}
