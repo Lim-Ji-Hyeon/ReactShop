@@ -1,22 +1,26 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export default function CardItem({
+  id,
   src,
   alt,
   title,
   price,
 }) {
   return (
-    <Container>
-      <ImageWrapper>
-        <ProductImage src={src} alt={alt} />
-      </ImageWrapper>
-      <ProductDescription>
-        <ProductName>{title}</ProductName>
-        <ProductPrice>${price}</ProductPrice>
-      </ProductDescription>
-    </Container>
+    <Link to={`/product/${id}`}>
+      <Container>
+        <ImageWrapper>
+          <ProductImage src={src} alt={alt} />
+        </ImageWrapper>
+        <ProductDescription>
+          <ProductName>{title}</ProductName>
+          <ProductPrice>${price}</ProductPrice>
+        </ProductDescription>
+      </Container>
+    </Link>
   )
 }
 
