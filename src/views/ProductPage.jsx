@@ -1,30 +1,49 @@
-import React, { useEffect, useState } from 'react'
-import { GET } from '../api/axios'
-import styled from 'styled-components'
-import BreadCrumbs from '../components/BreadCrumbs'
-import Badge from '../components/Badge'
-import StarRate from '../components/StarRate'
-import Button from '../components/Button'
-import { Link, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { add } from '../redux/product'
+import React, { useEffect, useState } from "react"
+import { GET } from "../api/axios"
+import styled from "styled-components"
+import BreadCrumbs from "../components/BreadCrumbs"
+import Badge from "../components/Badge"
+import StarRate from "../components/StarRate"
+import Button from "../components/Button"
+import { Link, useParams } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { add } from "../redux/product"
 
 export default function ProductPage() {
   const { id } = useParams()
-  const [product, setProduct] = useState({})
   const [modal, setModal] = useState(false)
+  const [cartProduct, setCartProduct] = useState({})
+  const { count } = useSelector(({ product }) => product)
 
-  const productStore = useSelector(
-    (state) => state.product.value
-  )
-  let productCount = 0
-  productCount = productStore.count
+  const getProduct = async () => {
+    const item = await GET(`/products/${id}`).then((res) => res)
+
+    await setCartProduct({
+      id: item.id,
+      category: item.category,
+      title: item.title,
+      image: item.image,
+      rate: parseFloat(item.rating.rate).toFixed(1),
+      participants: item.rating.count,
+      price: item.price,
+      description: item.description,
+      cartCount: 0
+    })
+  }
+
+  useEffect(() => {
+    getProduct()
+  }, [])
 
   const dispatch = useDispatch()
 
-  const addProduct = () => {
-    productCount += 1
-    dispatch(add({ product: product, count: productCount }))
+  const addToCart = () => {
+    dispatch(
+      add({
+        products: { ...cartProduct, cartCount: 1 },
+        count: count + 1
+      })
+    )
     setModal(true)
   }
 
@@ -33,8 +52,8 @@ export default function ProductPage() {
       <ModalWrapper>
         <ModalContent>장바구니에 담겼습니다.</ModalContent>
         <Button
-          color={'green'}
-          size={'small'}
+          color={"green"}
+          size={"small"}
           onClick={() => {
             setModal(!modal)
           }}
@@ -45,57 +64,31 @@ export default function ProductPage() {
     )
   }
 
-  const getProduct = async () => {
-    const item = await GET(`/products/${id}`).then(
-      (res) => res
-    )
-
-    await setProduct({
-      id: item.id,
-      category: item.category,
-      title: item.title,
-      image: item.image,
-      rate: parseFloat(item.rating.rate).toFixed(1),
-      counts: item.rating.count,
-      price: item.price,
-      description: item.description,
-    })
-  }
-
-  useEffect(() => {
-    getProduct()
-  }, [])
-
   return (
     <ProductWrapper>
-      <BreadCrumbs
-        from={product.category}
-        to={product.title}
-      />
+      <BreadCrumbs from={cartProduct.category} to={cartProduct.title} />
       <Product>
-        <Image src={product.image}></Image>
+        <Image src={cartProduct.image}></Image>
         <Contents>
           <Title>
-            <ProductTitle>{product.title}</ProductTitle>
-            <Badge type={'new'}>NEW</Badge>
+            <ProductTitle>{cartProduct.title}</ProductTitle>
+            <Badge type={"new"}>NEW</Badge>
           </Title>
-          <Description>{product.description}</Description>
+          <Description>{cartProduct.description}</Description>
           <RateDiv>
-            <StarRate rate={product.rate} />
+            <StarRate rate={cartProduct.rate} />
             <Rate>
-              {product.rate} / {product.counts} 참여
+              {cartProduct.rate} / {cartProduct.participants} 참여
             </Rate>
           </RateDiv>
-          <Price>${product.price}</Price>
+          <Price>${productData.price}</Price>
           <ButtonDiv>
-            <Button size={'large'} onClick={addProduct}>
+            <Button size={"large"} onClick={addToCart}>
               장바구니에 담기
             </Button>
             {modal === true ? <Modal /> : null}
-            <Link to={'/myCart'}>
-              <Button size={'large'}>
-                장바구니로 이동
-              </Button>
+            <Link to={"/myCart"}>
+              <Button size={"large"}>장바구니로 이동</Button>
             </Link>
           </ButtonDiv>
         </Contents>
