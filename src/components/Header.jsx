@@ -10,7 +10,7 @@ import Button from "../components/Button"
 import { change } from "../redux/mode"
 
 export default function Header() {
-  const cartStore = useSelector((state) => state.product)
+  const cartStore = useSelector((state) => state.cart)
   const modeStore = useSelector((state) => state.mode.value)
 
   let mode = modeStore.color

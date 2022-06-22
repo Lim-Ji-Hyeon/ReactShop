@@ -7,13 +7,13 @@ import StarRate from "../components/StarRate"
 import Button from "../components/Button"
 import { Link, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { add } from "../redux/product"
+import { add } from "../redux/cart"
 
 export default function ProductPage() {
   const { id } = useParams()
   const [modal, setModal] = useState(false)
   const [cartProduct, setCartProduct] = useState({})
-  const { count } = useSelector(({ product }) => product)
+  const { count } = useSelector(({ cart }) => cart)
 
   const getProduct = async () => {
     const item = await GET(`/products/${id}`).then((res) => res)
@@ -81,7 +81,7 @@ export default function ProductPage() {
               {cartProduct.rate} / {cartProduct.participants} 참여
             </Rate>
           </RateDiv>
-          <Price>${productData.price}</Price>
+          <Price>${cartProduct.price}</Price>
           <ButtonDiv>
             <Button size={"large"} onClick={addToCart}>
               장바구니에 담기
