@@ -1,4 +1,3 @@
-import React from "react"
 import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit"
 import cartReducer from "./cart"
 import modeReducer from "./mode"
