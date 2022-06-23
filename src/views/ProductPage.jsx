@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { GET } from "../api/axios"
 import styled from "styled-components"
 import BreadCrumbs from "../components/BreadCrumbs"
 import Badge from "../components/Badge"
@@ -7,22 +6,30 @@ import StarRate from "../components/StarRate"
 import Button from "../components/Button"
 import { Link, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { add } from "../redux/product"
+import { add } from "../redux/cart"
+import { getList } from "../redux/setProduct"
 
 export default function ProductPage() {
   const { id } = useParams()
-  const [product, setProduct] = useState({})
   const [modal, setModal] = useState(false)
-
-  const productStore = useSelector((state) => state.product.value)
-  let productCount = 0
-  productCount = productStore.count
-
+  const [cartProduct, setCartProduct] = useState({})
   const dispatch = useDispatch()
+  const { count } = useSelector(({ cart }) => cart)
+  const list = useSelector((state) => state.setProduct.value)
 
-  const addProduct = () => {
-    productCount += 1
-    dispatch(add({ product: product, count: productCount }))
+  useEffect(() => {
+    dispatch(getList())
+    const item = list.filter((item) => item.id.toString() === id)
+    setCartProduct(() => ({ ...item[0] }))
+  }, [])
+
+  const addToCart = () => {
+    dispatch(
+      add({
+        products: { ...cartProduct, cartCount: 1 },
+        count: count + 1
+      })
+    )
     setModal(true)
   }
 
@@ -43,45 +50,26 @@ export default function ProductPage() {
     )
   }
 
-  const getProduct = async () => {
-    const item = await GET(`/products/${id}`).then((res) => res)
-
-    await setProduct({
-      id: item.id,
-      category: item.category,
-      title: item.title,
-      image: item.image,
-      rate: parseFloat(item.rating.rate).toFixed(1),
-      counts: item.rating.count,
-      price: item.price,
-      description: item.description
-    })
-  }
-
-  useEffect(() => {
-    getProduct()
-  }, [product])
-
   return (
     <ProductWrapper>
-      <BreadCrumbs from={product.category} to={product.title} />
+      <BreadCrumbs from={cartProduct.category} to={cartProduct.title} />
       <Product>
-        <Image src={product.image}></Image>
+        <Image src={cartProduct.image}></Image>
         <Contents>
           <Title>
-            <ProductTitle>{product.title}</ProductTitle>
+            <ProductTitle>{cartProduct.title}</ProductTitle>
             <Badge type={"new"}>NEW</Badge>
           </Title>
-          <Description>{product.description}</Description>
+          <Description>{cartProduct.description}</Description>
           <RateDiv>
-            <StarRate rate={product.rate} />
+            <StarRate rate={cartProduct.rate} />
             <Rate>
-              {product.rate} / {product.counts} 참여
+              {cartProduct.rate} / {cartProduct.participants} 참여
             </Rate>
           </RateDiv>
-          <Price>${product.price}</Price>
+          <Price>${cartProduct.price}</Price>
           <ButtonDiv>
-            <Button size={"large"} onClick={addProduct}>
+            <Button size={"large"} onClick={addToCart}>
               장바구니에 담기
             </Button>
             {modal === true ? <Modal /> : null}
