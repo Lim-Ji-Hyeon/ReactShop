@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { GET } from "../api/axios"
 import styled from "styled-components"
 import BreadCrumbs from "../components/BreadCrumbs"
 import Badge from "../components/Badge"
@@ -8,34 +7,21 @@ import Button from "../components/Button"
 import { Link, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { add } from "../redux/cart"
+import { getList } from "../redux/setProduct"
 
 export default function ProductPage() {
   const { id } = useParams()
   const [modal, setModal] = useState(false)
   const [cartProduct, setCartProduct] = useState({})
+  const dispatch = useDispatch()
   const { count } = useSelector(({ cart }) => cart)
-
-  const getProduct = async () => {
-    const item = await GET(`/products/${id}`).then((res) => res)
-
-    await setCartProduct({
-      id: item.id,
-      category: item.category,
-      title: item.title,
-      image: item.image,
-      rate: parseFloat(item.rating.rate).toFixed(1),
-      participants: item.rating.count,
-      price: item.price,
-      description: item.description,
-      cartCount: 0
-    })
-  }
+  const list = useSelector((state) => state.setProduct.value)
 
   useEffect(() => {
-    getProduct()
+    dispatch(getList())
+    const item = list.filter((item) => item.id.toString() === id)
+    setCartProduct(() => ({ ...item[0] }))
   }, [])
-
-  const dispatch = useDispatch()
 
   const addToCart = () => {
     dispatch(
