@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { CardSection } from "../components/card"
 import { useSelector, useDispatch } from "react-redux"
 import { getList } from "../redux/setProduct"
-import Corousel from "../components/carousel/Carousel"
+import Carousel from "../components/carousel/Carousel"
 import img_shop_digital from "/img_shop_digital.jpeg"
 import img_shop_fashion from "/img_shop_fashion.jpeg"
 import img_shop_grocery from "/img_shop_grocery.jpeg"
@@ -21,12 +21,11 @@ export default function MainPage() {
     )
     const newList = category.map((category) => categoryList[category][categoryList[category].length - 1])
     setNewProducts(() => [...newList])
-    console.log(newProducts)
   }, [])
 
   return (
     <>
-      <Corousel images={[`${img_shop_digital}`, `${img_shop_fashion}`, `${img_shop_grocery}`]} />
+      <Carousel images={[`${img_shop_digital}`, `${img_shop_fashion}`, `${img_shop_grocery}`]} />
       <CardSection title="신제품" data={newProducts} />
     </>
   )
