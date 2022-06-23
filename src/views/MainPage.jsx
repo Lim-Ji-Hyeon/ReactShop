@@ -1,29 +1,30 @@
-import React, { useEffect, useState } from 'react'
-import { CardSection } from '../components/card'
-import { GET } from '../api/axios'
+import React, { useEffect, useState } from "react"
+import { CardSection } from "../components/card"
+import { useSelector, useDispatch } from "react-redux"
+import { getList } from "../redux/setProduct"
+
 export default function MainPage() {
   const [newProducts, setNewProducts] = useState([])
 
-  const getNewProducts = async () => {
-    const products = await Promise.all([
-      GET('/products/category/electronics'),
-      GET('/products/category/jewelery'),
-      GET("/products/category/men's clothing"),
-      GET("/products/category/women's clothing"),
-    ]).then((res) => {
-      return res.map(
-        (category) => category[category.length - 1]
-      )
-    })
-    await setNewProducts(products)
-  }
+  const dispatch = useDispatch()
+  const list = useSelector((state) => state.setProduct.value)
+
+  const category = ["electronics", "jewelery", "men's clothing", "women's clothing"]
+  let categoryList = {}
+  let newList = []
 
   useEffect(() => {
-    getNewProducts()
+    dispatch(getList())
+    category.forEach(
+      (itemCategory) => (categoryList[itemCategory] = list.filter((item) => item.category === itemCategory))
+    )
+    category.forEach((category) => newList.push(categoryList[category][categoryList[category].length - 1]))
+    setNewProducts(newList)
   }, [])
+
   return (
     <>
-      <CardSection title='신제품' data={newProducts} />
+      <CardSection title="신제품" data={newProducts} />
     </>
   )
 }
