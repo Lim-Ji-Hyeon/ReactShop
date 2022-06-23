@@ -10,7 +10,6 @@ export default function Carousel({ images, width = "80", height = "40", lengthOf
 
   useEffect(() => {
     setDuration(lengthOfTime)
-    console.log(images)
   }, [])
 
   const move = (_currentSlide, _duration = 0) => {
