@@ -3,9 +3,14 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 const initialStateValue = {products : []}
 
-export const getList = createAsyncThunk("GET_PRODUCTS", async () => {
-  const response = await axios.get("https://fakestoreapi.com/products")
-  return response.data
+export const getList = createAsyncThunk("GET_PRODUCTS", async ({rejectWithValue}) => {
+  try {
+    const response = await axios.get("https://fakestoreapi.com/products")
+    return response.data
+  }
+  catch (error) {
+    return rejectWithValue(error.response.data)
+  }
 })
 
 export const setProductSlice = createSlice({
