@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -8,13 +8,18 @@ import styled from "styled-components"
 import { categoryData } from "../data/categoryData"
 import Button from "../components/Button"
 import { change } from "../redux/mode"
+import SearchList from "./SearchList"
 
 export default function Header() {
   const cartStore = useSelector((state) => state.cart)
   const modeStore = useSelector((state) => state.mode.value)
+  const [searchInput, setSearchInput] = useState()
+  const [searchListView, setSearchListView] = useState(false)
 
   let mode = modeStore.color
   const cart = cartStore.count
+
+  const searchElement = useRef()
 
   const dispatch = useDispatch()
 
@@ -22,6 +27,29 @@ export default function Header() {
     mode = mode === "black" ? "white" : "black"
     dispatch(change({ color: mode }))
   }
+
+  const onChangeSearchInput = (event) => {
+    let keyword = event.target.value
+    setSearchInput(keyword)
+    if (keyword !== "") {
+      setSearchListView(true)
+    }
+  }
+
+  const searchClick = () => {
+    setSearchListView(!searchListView)
+  }
+
+  const handleCloseSearch = (e) => {
+    if (searchListView && !searchElement.current.contains(e.target)) setSearchListView(false)
+  }
+
+  useEffect(() => {
+    document.addEventListener("click", handleCloseSearch)
+    return () => {
+      document.removeEventListener("click", handleCloseSearch)
+    }
+  })
 
   const category = categoryData.map((item, index) => (
     <CategoryLink mode={mode} key={index} to={item.url}>
@@ -50,14 +78,20 @@ export default function Header() {
             <DarkMode icon={faMoon} alt="다크 모드 선택" />
           )}
         </ModeButton>
-        <Search>
+        <Search ref={searchElement} onClick={searchClick}>
           <Hidden>
             <Button color={mode} size={"xSmall"}>
               <FontAwesomeIcon icon={faMagnifyingGlass} alt="검색" />
             </Button>
           </Hidden>
-          <SearchInput mode={mode} type="text" placeholder="검색"></SearchInput>
-          <List></List>
+          <SearchInput
+            className="searchInput"
+            mode={mode}
+            type="text"
+            placeholder="검색"
+            onChange={(e) => onChangeSearchInput(e)}
+          ></SearchInput>
+          {searchListView && <SearchList keyword={searchInput} />}
         </Search>
         <Cart to="/myCart">
           <span>
@@ -174,9 +208,6 @@ const SearchInput = styled.input`
   ::placeholder {
     color: ${(props) => (props.mode === "black" ? "white" : "black")};
   }
-`
-const List = styled.ul`
-  display: none;
 `
 const Cart = styled(Link)`
   width: 4rem;
