@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { GET } from '../api/axios'
-import styled from 'styled-components'
-import BreadCrumbs from '../components/BreadCrumbs'
-import Badge from '../components/Badge'
-import StarRate from '../components/StarRate'
-import Button from '../components/Button'
-import { Link, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { add } from '../redux/product'
+import React, { useEffect, useState } from "react"
+import { GET } from "../api/axios"
+import styled from "styled-components"
+import BreadCrumbs from "../components/BreadCrumbs"
+import Badge from "../components/Badge"
+import StarRate from "../components/StarRate"
+import Button from "../components/Button"
+import { Link, useParams } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { add } from "../redux/product"
 
 export default function ProductPage() {
   const { id } = useParams()
   const [product, setProduct] = useState({})
   const [modal, setModal] = useState(false)
 
-  const productStore = useSelector(
-    (state) => state.product.value
-  )
+  const productStore = useSelector((state) => state.product.value)
   let productCount = 0
   productCount = productStore.count
 
@@ -33,8 +31,8 @@ export default function ProductPage() {
       <ModalWrapper>
         <ModalContent>장바구니에 담겼습니다.</ModalContent>
         <Button
-          color={'green'}
-          size={'small'}
+          color={"green"}
+          size={"small"}
           onClick={() => {
             setModal(!modal)
           }}
@@ -46,9 +44,7 @@ export default function ProductPage() {
   }
 
   const getProduct = async () => {
-    const item = await GET(`/products/${id}`).then(
-      (res) => res
-    )
+    const item = await GET(`/products/${id}`).then((res) => res)
 
     await setProduct({
       id: item.id,
@@ -58,26 +54,23 @@ export default function ProductPage() {
       rate: parseFloat(item.rating.rate).toFixed(1),
       counts: item.rating.count,
       price: item.price,
-      description: item.description,
+      description: item.description
     })
   }
 
   useEffect(() => {
     getProduct()
-  }, [])
+  }, [product])
 
   return (
     <ProductWrapper>
-      <BreadCrumbs
-        from={product.category}
-        to={product.title}
-      />
+      <BreadCrumbs from={product.category} to={product.title} />
       <Product>
         <Image src={product.image}></Image>
         <Contents>
           <Title>
             <ProductTitle>{product.title}</ProductTitle>
-            <Badge type={'new'}>NEW</Badge>
+            <Badge type={"new"}>NEW</Badge>
           </Title>
           <Description>{product.description}</Description>
           <RateDiv>
@@ -88,14 +81,12 @@ export default function ProductPage() {
           </RateDiv>
           <Price>${product.price}</Price>
           <ButtonDiv>
-            <Button size={'large'} onClick={addProduct}>
+            <Button size={"large"} onClick={addProduct}>
               장바구니에 담기
             </Button>
             {modal === true ? <Modal /> : null}
-            <Link to={'/myCart'}>
-              <Button size={'large'}>
-                장바구니로 이동
-              </Button>
+            <Link to={"/myCart"}>
+              <Button size={"large"}>장바구니로 이동</Button>
             </Link>
           </ButtonDiv>
         </Contents>
