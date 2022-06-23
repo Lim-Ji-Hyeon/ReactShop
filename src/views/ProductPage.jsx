@@ -20,8 +20,11 @@ export default function ProductPage() {
   useEffect(() => {
     dispatch(getList())
     const item = list.filter((item) => item.id.toString() === id)
-    setCartProduct(() => ({ ...item[0] }))
-  }, [])
+    setCartProduct(() => ({
+      ...item[0],
+      rating: { ...item[0].rating, rate: parseFloat(item[0].rating.rate).toFixed(1) }
+    }))
+  }, [id])
 
   const addToCart = () => {
     dispatch(
@@ -62,9 +65,9 @@ export default function ProductPage() {
           </Title>
           <Description>{cartProduct.description}</Description>
           <RateDiv>
-            <StarRate rate={cartProduct.rate} />
+            <StarRate rate={cartProduct.rating.rate} />
             <Rate>
-              {cartProduct.rate} / {cartProduct.participants} 참여
+              {cartProduct.rating.rate} / {cartProduct.rating.participants} 참여
             </Rate>
           </RateDiv>
           <Price>${cartProduct.price}</Price>
