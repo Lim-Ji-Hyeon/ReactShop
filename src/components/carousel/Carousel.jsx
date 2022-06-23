@@ -1,15 +1,16 @@
-import { useState, useEffect } from 'react'
-import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons'
+import { useState, useEffect } from "react"
+import styled from "styled-components"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons"
 
-export default function Carousel({ images, width, height, lengthOfTime }) {
+export default function Carousel({ images, width = "80", height = "40", lengthOfTime = "500" }) {
   const [currentSlide, setCurrentSlide] = useState(1)
   const [duration, setDuration] = useState(0)
   const [isMoving, setIsMoving] = useState(false)
 
   useEffect(() => {
     setDuration(lengthOfTime)
+    console.log(images)
   }, [])
 
   const move = (_currentSlide, _duration = 0) => {
@@ -22,7 +23,7 @@ export default function Carousel({ images, width, height, lengthOfTime }) {
 
   const handleClick = ({ target: { id } }) => {
     if (isMoving) return
-    const delta = id === 'prev' ? -1 : 1
+    const delta = id === "prev" ? -1 : 1
     move(currentSlide + 1 * delta, lengthOfTime)
   }
 
@@ -52,7 +53,14 @@ export default function Carousel({ images, width, height, lengthOfTime }) {
       </NextControl>
       <DotWrapper>
         {images.map((_, index) => {
-          return <DotButton id={`dot${index}`} key={`dot${index}`} onClick={() => handleNav(index)} currentSlide={currentSlide} />
+          return (
+            <DotButton
+              key={`dot${index}`}
+              id={`dot${index}`}
+              onClick={() => handleNav(index)}
+              currentSlide={currentSlide}
+            />
+          )
         })}
       </DotWrapper>
     </Container>
