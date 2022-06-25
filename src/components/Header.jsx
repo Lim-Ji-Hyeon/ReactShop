@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -8,6 +8,8 @@ import styled from "styled-components"
 import { categoryData } from "../data/categoryData"
 import Button from "../components/Button"
 import { change } from "../redux/mode"
+import SearchList from "./SearchList"
+import { getList } from "../redux/setProduct"
 
 export default function Header() {
   const cartStore = useSelector((state) => state.cart)
@@ -22,6 +24,26 @@ export default function Header() {
     mode = mode === "black" ? "white" : "black"
     dispatch(change({ color: mode }))
   }
+
+  const onChangeSearchInput = (event) => {
+    let keyword = event.target.value
+    setSearchInput(keyword)
+    if (keyword !== "") {
+      setSearchListView(true)
+    }
+  }
+
+  const handleCloseSearch = (e) => {
+    if (searchListView && !searchElement.current.contains(e.target)) setSearchListView(false)
+  }
+
+  useEffect(() => {
+    dispatch(getList())
+    document.addEventListener("click", handleCloseSearch)
+    return () => {
+      document.removeEventListener("click", handleCloseSearch)
+    }
+  })
 
   const category = categoryData.map((item, index) => (
     <CategoryLink mode={mode} key={index} to={item.url}>
@@ -56,8 +78,14 @@ export default function Header() {
               <FontAwesomeIcon icon={faMagnifyingGlass} alt="검색" />
             </Button>
           </Hidden>
-          <SearchInput mode={mode} type="text" placeholder="검색"></SearchInput>
-          <List></List>
+          <SearchInput
+            className="searchInput"
+            mode={mode}
+            type="text"
+            placeholder="검색"
+            onChange={(e) => onChangeSearchInput(e)}
+          ></SearchInput>
+          {searchListView && <SearchList setFunction={setSearchInput} keyword={searchInput} />}
         </Search>
         <Cart to="/myCart">
           <span>
