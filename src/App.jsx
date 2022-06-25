@@ -1,23 +1,19 @@
-import React from 'react'
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from 'react-router-dom'
-import { ThemeProvider } from 'styled-components'
-import theme from './utils/theme'
-import Header from '../src/components/Header'
-import Fashion from '../src/views/Fashion'
-import Accessory from '../src/views/Accessory'
-import Digital from '../src/views/Digital'
-import Cart from '../src/views/Cart'
-import Footer from '../src/components/Footer'
-import MainPage from './views/MainPage'
-import ProductPage from './views/ProductPage'
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
-import { persistStore } from 'redux-persist'
-import store from './redux/store'
+import React from "react"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { ThemeProvider } from "styled-components"
+import theme from "./utils/theme"
+import Header from "../src/components/Header"
+import Fashion from "../src/views/Fashion"
+import Accessory from "../src/views/Accessory"
+import Digital from "../src/views/Digital"
+import Cart from "../src/views/Cart"
+import Footer from "../src/components/Footer"
+import MainPage from "./views/MainPage"
+import ProductPage from "./views/ProductPage"
+import { Provider } from "react-redux"
+import { PersistGate } from "redux-persist/integration/react"
+import { persistStore } from "redux-persist"
+import store from "./redux/store"
 
 function App() {
   let persistor = persistStore(store)
@@ -28,27 +24,15 @@ function App() {
           <BrowserRouter>
             <Header />
             <Routes>
-              <Route path={'/'} element={<MainPage />} />
-              <Route
-                path={'/fashion'}
-                element={<Fashion />}
-              />
-              <Route
-                path={'/accessory'}
-                element={<Accessory />}
-              />
-              <Route
-                path={'/digital'}
-                element={<Digital />}
-              />
-              <Route path={'/myCart'} element={<Cart />} />
-              <Route
-                path='/product/:id'
-                element={<ProductPage />}
-              />
+              <Route path={"/"} element={<MainPage />} />
+              <Route path={"/fashion"} element={<Fashion />} />
+              <Route path={"/accessory"} element={<Accessory />} />
+              <Route path={"/digital"} element={<Digital />} />
+              <Route path={"/myCart"} element={<Cart />} />
+              <Route path="/product/:id" element={<ProductPage />} />
             </Routes>
+            <Footer />
           </BrowserRouter>
-          <Footer />
         </ThemeProvider>
       </PersistGate>
     </Provider>
