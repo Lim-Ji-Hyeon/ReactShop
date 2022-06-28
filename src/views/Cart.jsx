@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import styled from "styled-components"
 import Button from "../components/Button"
-import Modal from "../components/Modal"
+import CartModal from "../components/CartModal"
 import { Link } from "react-router-dom"
 import { increase, decrease, remove, removeAll } from "../redux/cart"
 
@@ -152,7 +152,7 @@ export default function Cart() {
               전체 상품 삭제하기
             </Button>
           </CartListButtonWrapper>
-          <Modal title="Receipt" state={purchaseList} setState={setPurchaseList} />
+          <CartModal title="Receipt" state={purchaseList} setState={setPurchaseList} />
         </CartWrapper>
       ) : (
         <NoProductsWrapper>
