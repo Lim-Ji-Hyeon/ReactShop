@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react"
 import { CardSection } from "../components/card"
 import { useSelector } from "react-redux"
 import Carousel from "../components/carousel/Carousel"
-import img_shop_digital from "/img_shop_digital.jpeg"
-import img_shop_fashion from "/img_shop_fashion.jpeg"
-import img_shop_grocery from "/img_shop_grocery.jpeg"
+import img_shop_digital from "../assets/img_shop_digital.jpeg"
+import img_shop_fashion from "../assets/img_shop_fashion.jpeg"
+import img_shop_grocery from "../assets/img_shop_grocery.jpeg"
 
 export default function MainPage() {
   const [newProducts, setNewProducts] = useState([])

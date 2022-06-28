@@ -57,10 +57,13 @@ export const cartSlice = createSlice({
         return product.id !== action.payload.id
       })
     },
-    purchase: (state, action) => {}
+    removeAll: (state) => {
+      state.products = []
+      state.count = 0
+    }
   }
 })
 
-export const { add, increase, decrease, remove } = cartSlice.actions
+export const { add, increase, decrease, remove, removeAll } = cartSlice.actions
 
 export default cartSlice.reducer
