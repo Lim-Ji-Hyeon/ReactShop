@@ -1,25 +1,22 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars, faMagnifyingGlass, faCartShopping } from "@fortawesome/free-solid-svg-icons"
+import { faBars, faCartShopping } from "@fortawesome/free-solid-svg-icons"
 import { faSun, faMoon } from "@fortawesome/free-regular-svg-icons"
 import styled from "styled-components"
 import { categoryData } from "../data/categoryData"
 import Button from "../components/Button"
 import { change } from "../redux/mode"
-import SearchList from "./SearchList"
+import Search from "./Search"
+import { getList } from "../redux/setProduct"
 
 export default function Header() {
   const cartStore = useSelector((state) => state.cart)
   const modeStore = useSelector((state) => state.mode.value)
-  const [searchInput, setSearchInput] = useState()
-  const [searchListView, setSearchListView] = useState(false)
 
   let mode = modeStore.color
   const cart = cartStore.count
-
-  const searchElement = useRef()
 
   const dispatch = useDispatch()
 
@@ -28,34 +25,15 @@ export default function Header() {
     dispatch(change({ color: mode }))
   }
 
-  const onChangeSearchInput = (event) => {
-    let keyword = event.target.value
-    setSearchInput(keyword)
-    if (keyword !== "") {
-      setSearchListView(true)
-    }
-  }
-
-  const searchClick = () => {
-    setSearchListView(!searchListView)
-  }
-
-  const handleCloseSearch = (e) => {
-    if (searchListView && !searchElement.current.contains(e.target)) setSearchListView(false)
-  }
-
-  useEffect(() => {
-    document.addEventListener("click", handleCloseSearch)
-    return () => {
-      document.removeEventListener("click", handleCloseSearch)
-    }
-  })
-
   const category = categoryData.map((item, index) => (
     <CategoryLink mode={mode} key={index} to={item.url}>
       {item.category}
     </CategoryLink>
   ))
+
+  useEffect(() => {
+    dispatch(getList())
+  }, [])
 
   return (
     <HeaderWrapper mode={mode}>
@@ -78,21 +56,7 @@ export default function Header() {
             <DarkMode icon={faMoon} alt="다크 모드 선택" />
           )}
         </ModeButton>
-        <Search ref={searchElement} onClick={searchClick}>
-          <Hidden>
-            <Button color={mode} size={"xSmall"}>
-              <FontAwesomeIcon icon={faMagnifyingGlass} alt="검색" />
-            </Button>
-          </Hidden>
-          <SearchInput
-            className="searchInput"
-            mode={mode}
-            type="text"
-            placeholder="검색"
-            onChange={(e) => onChangeSearchInput(e)}
-          ></SearchInput>
-          {searchListView && <SearchList keyword={searchInput} />}
-        </Search>
+        <Search mode={mode} />
         <Cart to="/myCart">
           <span>
             <CartImg mode={mode} icon={faCartShopping} alt="장바구니" />
@@ -187,27 +151,6 @@ const DarkMode = styled(FontAwesomeIcon)`
   width: 2.5rem;
   height: 2.5rem;
   color: black;
-`
-
-const Search = styled.div`
-  width: 13rem;
-  height: 5rem;
-  display: inline-block;
-  margin-right: 0.5rem;
-`
-
-const SearchInput = styled.input`
-  width: 12rem;
-  height: 2.5rem;
-  background-color: ${(props) => (props.mode === "black" ? "#696969" : "#cdcdcd")};
-  border-radius: 0.5rem;
-  border: 0;
-  color: ${(props) => (props.mode === "black" ? "white" : "black")};
-  padding-left: 0.6rem;
-  margin: 0.6rem 0 0 0.5rem;
-  ::placeholder {
-    color: ${(props) => (props.mode === "black" ? "white" : "black")};
-  }
 `
 const Cart = styled(Link)`
   width: 4rem;
