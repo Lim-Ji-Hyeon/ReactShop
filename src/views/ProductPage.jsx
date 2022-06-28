@@ -65,9 +65,9 @@ export default function ProductPage() {
           </Title>
           <Description>{cartProduct.description}</Description>
           <RateDiv>
-            <StarRate rate={cartProduct.rating.rate} />
+            <StarRate rate={cartProduct.rating?.rate} />
             <Rate>
-              {cartProduct.rating.rate} / {cartProduct.rating.participants} 참여
+              {cartProduct.rating?.rate} / {cartProduct.rating?.count} 참여
             </Rate>
           </RateDiv>
           <Price>${cartProduct.price}</Price>
