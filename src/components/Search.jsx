@@ -14,9 +14,11 @@ export default function Search({ mode }) {
   const list = useSelector((state) => state.setProduct.value)
 
   const searchElement = useRef()
+  const searchValue = useRef()
 
-  const linkClick = () => {
+  const linkClick = (data) => {
     setSearchListView(false)
+    searchValue.current.value = data
   }
 
   const items = searchList
@@ -30,7 +32,12 @@ export default function Search({ mode }) {
     .map((data, key) => {
       return (
         <ItemList key={`search_${key}`}>
-          <Item onClick={linkClick} to={`/product/${data.id}`}>
+          <Item
+            onClick={() => {
+              linkClick(data.title)
+            }}
+            to={`/product/${data.id}`}
+          >
             {data.title}
           </Item>
         </ItemList>
@@ -76,7 +83,13 @@ export default function Search({ mode }) {
           <FontAwesomeIcon icon={faMagnifyingGlass} alt="검색" />
         </Button>
       </Hidden>
-      <SearchInput mode={mode} type="text" placeholder="검색" onChange={(e) => onChangeSearchInput(e)}></SearchInput>
+      <SearchInput
+        ref={searchValue}
+        mode={mode}
+        type="text"
+        placeholder="검색"
+        onChange={(e) => onChangeSearchInput(e)}
+      ></SearchInput>
       {searchListView && (
         <SearchViewWrapper>
           <Items>
