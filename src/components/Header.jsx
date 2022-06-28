@@ -1,14 +1,14 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars, faMagnifyingGlass, faCartShopping } from "@fortawesome/free-solid-svg-icons"
+import { faBars, faCartShopping } from "@fortawesome/free-solid-svg-icons"
 import { faSun, faMoon } from "@fortawesome/free-regular-svg-icons"
 import styled from "styled-components"
 import { categoryData } from "../data/categoryData"
 import Button from "../components/Button"
 import { change } from "../redux/mode"
-import SearchList from "./SearchList"
+import Search from "./Search"
 import { getList } from "../redux/setProduct"
 
 export default function Header() {
@@ -51,6 +51,10 @@ export default function Header() {
     </CategoryLink>
   ))
 
+  useEffect(() => {
+    dispatch(getList())
+  }, [])
+
   return (
     <HeaderWrapper mode={mode}>
       <Hidden>
@@ -72,21 +76,7 @@ export default function Header() {
             <DarkMode icon={faMoon} alt="다크 모드 선택" />
           )}
         </ModeButton>
-        <Search>
-          <Hidden>
-            <Button color={mode} size={"xSmall"}>
-              <FontAwesomeIcon icon={faMagnifyingGlass} alt="검색" />
-            </Button>
-          </Hidden>
-          <SearchInput
-            className="searchInput"
-            mode={mode}
-            type="text"
-            placeholder="검색"
-            onChange={(e) => onChangeSearchInput(e)}
-          ></SearchInput>
-          {searchListView && <SearchList setFunction={setSearchInput} keyword={searchInput} />}
-        </Search>
+        <Search mode={mode} />
         <Cart to="/myCart">
           <span>
             <CartImg mode={mode} icon={faCartShopping} alt="장바구니" />
@@ -181,30 +171,6 @@ const DarkMode = styled(FontAwesomeIcon)`
   width: 2.5rem;
   height: 2.5rem;
   color: black;
-`
-
-const Search = styled.div`
-  width: 13rem;
-  height: 5rem;
-  display: inline-block;
-  margin-right: 0.5rem;
-`
-
-const SearchInput = styled.input`
-  width: 12rem;
-  height: 2.5rem;
-  background-color: ${(props) => (props.mode === "black" ? "#696969" : "#cdcdcd")};
-  border-radius: 0.5rem;
-  border: 0;
-  color: ${(props) => (props.mode === "black" ? "white" : "black")};
-  padding-left: 0.6rem;
-  margin: 0.6rem 0 0 0.5rem;
-  ::placeholder {
-    color: ${(props) => (props.mode === "black" ? "white" : "black")};
-  }
-`
-const List = styled.ul`
-  display: none;
 `
 const Cart = styled(Link)`
   width: 4rem;
