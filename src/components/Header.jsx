@@ -20,40 +20,20 @@ export default function Header() {
 
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    dispatch(getList())
+  }, [])
+
   const onClickMode = () => {
     mode = mode === "black" ? "white" : "black"
     dispatch(change({ color: mode }))
   }
-
-  const onChangeSearchInput = (event) => {
-    let keyword = event.target.value
-    setSearchInput(keyword)
-    if (keyword !== "") {
-      setSearchListView(true)
-    }
-  }
-
-  const handleCloseSearch = (e) => {
-    if (searchListView && !searchElement.current.contains(e.target)) setSearchListView(false)
-  }
-
-  useEffect(() => {
-    dispatch(getList())
-    document.addEventListener("click", handleCloseSearch)
-    return () => {
-      document.removeEventListener("click", handleCloseSearch)
-    }
-  })
 
   const category = categoryData.map((item, index) => (
     <CategoryLink mode={mode} key={index} to={item.url}>
       {item.category}
     </CategoryLink>
   ))
-
-  useEffect(() => {
-    dispatch(getList())
-  }, [])
 
   return (
     <HeaderWrapper mode={mode}>

@@ -13,7 +13,6 @@ export default function Cart() {
   const dispatch = useDispatch()
   useEffect(() => {
     setCartProducts(() => [...products])
-    console.log("cart")
   }, [products])
 
   const handleCheckBox = ({ target }) => {
