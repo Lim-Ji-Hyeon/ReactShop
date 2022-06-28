@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons"
 
-export default function Carousel({ images, width = "80", height = "40", lengthOfTime = "500" }) {
+export default function Carousel({ images, width, height, lengthOfTime = "500" }) {
   const [currentSlide, setCurrentSlide] = useState(1)
   const [duration, setDuration] = useState(0)
   const [isMoving, setIsMoving] = useState(false)
@@ -67,10 +67,10 @@ export default function Carousel({ images, width = "80", height = "40", lengthOf
 }
 
 const Container = styled.div`
-  width: ${({ width }) => width}rem;
-  height: ${({ height }) => height}rem;
+  width: ${({ width }) => width || "96%"};
+  height: ${({ height }) => height || "40rem"};
   position: relative;
-  margin: 10rem auto 0;
+  margin: 5rem auto 0;
   overflow: hidden;
 `
 const Slides = styled.div`
@@ -79,9 +79,8 @@ const Slides = styled.div`
   transform: translate3D(${({ currentSlide }) => currentSlide * -100}%, 0, 0);
 `
 const Image = styled.div`
-  margin: 0 2rem;
-  height: ${({ height }) => height}rem;
-  flex-basis: ${({ width }) => width - 4}rem;
+  height: ${({ height }) => height || "40rem"};
+  flex-basis: calc(${({ width }) => width || "100%"});
   flex-shrink: 0;
   background-image: url(${({ bguUrl }) => bguUrl});
   background-size: cover;
